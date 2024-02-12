@@ -1,6 +1,8 @@
 package telran.java51.forum.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,9 +17,9 @@ public class PostDto {
    String title; 
    String content; 
    String author; 
-   LocalDateTime  dateCreated; //"2021-12-14T11:39:05",
-   String[] tags; 
+   LocalDateTime  dateCreated;
+   Set <String> tags; 
    Integer likes;
-   CommentDto[] comments;
+   List<CommentDto> comments;
 
 }

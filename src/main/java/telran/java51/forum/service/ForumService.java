@@ -10,7 +10,7 @@ import telran.java51.forum.dto.UpdatePostDto;
 
 public interface ForumService {
 	
-	PostDto addPost (PostCreateDto postCreateDto);
+	PostDto addPost(String user, PostCreateDto postCreateDto);
 	
 	PostDto findPostById(Integer id);
 	
@@ -18,7 +18,7 @@ public interface ForumService {
 	
     List<PostDto> findPostsByAuthor(String user);
 	
-	PostDto addComment(String message);
+	PostDto addComment(Integer id, String user, String message);
 	
 	PostDto deletePost(Integer id);
 	
@@ -26,6 +26,6 @@ public interface ForumService {
 	
 	List<PostDto> findPostsByPeriod(FindPostsByPeriodDto findPostsByPeriodDto);
 
-	PostDto updatePost(UpdatePostDto updatePostDto);
+	PostDto updatePost(Integer id, UpdatePostDto updatePostDto);
 	
 }
