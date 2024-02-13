@@ -24,6 +24,7 @@ public class Post {
 	   String title; 
 	   @Setter
 	   String content; 
+	   @Setter
 	   String author; 
 	   LocalDateTime  dateCreated; 
 	   @Setter

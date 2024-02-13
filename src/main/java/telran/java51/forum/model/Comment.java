@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @EqualsAndHashCode(of = {"postId","dateCreated", "message"} )
-@Document(collection = "forum")
 @NoArgsConstructor
 public class Comment {
 	
