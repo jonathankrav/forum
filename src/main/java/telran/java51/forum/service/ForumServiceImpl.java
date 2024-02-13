@@ -25,6 +25,7 @@ public class ForumServiceImpl implements ForumService {
 	@Override
 	public PostDto addPost(String user, PostCreateDto postCreateDto) {
 		Post post = modelMapper.map(postCreateDto, Post.class);
+		post.setAuthor(user);
 		forumRepository.save(post);
 		return modelMapper.map(post, PostDto.class);
 	}

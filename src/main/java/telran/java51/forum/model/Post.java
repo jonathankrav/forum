@@ -26,11 +26,11 @@ public class Post {
 	   String content; 
 	   @Setter
 	   String author; 
-	   LocalDateTime  dateCreated; 
+	   LocalDateTime  dateCreated = LocalDateTime.now(); 
 	   @Setter
 	   Set <String> tags; 
 	   @Setter
-	   Integer likes;
+	   int likes;
 	   @Setter
 	   List<Comment> comments;
 	   
@@ -41,7 +41,8 @@ public class Post {
 		this.author = author;
 		this.dateCreated = dateCreated;
 		this.tags = tags;
-		comments = new ArrayList<>(); 
+		this.likes = 0;
+		this.comments = new ArrayList<>(); 
 	}
 	
 	public boolean addComment(Integer id, String user, String message) {
