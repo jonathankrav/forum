@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostCreateDto {
 	
+	String user;
 	String title; 
 	String content; 
 	Set <String> tags; 

@@ -22,7 +22,7 @@ import telran.java51.forum.service.ForumService;
 @RequiredArgsConstructor
 public class ForumController {
 	
-	ForumService forumService;
+	final ForumService forumService;
 
 	@PostMapping("/forum/post/{user}")
 	public PostDto addPost(@PathVariable ("user") String author, @RequestBody PostCreateDto postCreateDto) {
