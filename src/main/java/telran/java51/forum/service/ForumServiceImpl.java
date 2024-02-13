@@ -12,6 +12,8 @@ import telran.java51.forum.dto.FindPostsByPeriodDto;
 import telran.java51.forum.dto.PostCreateDto;
 import telran.java51.forum.dto.PostDto;
 import telran.java51.forum.dto.UpdatePostDto;
+import telran.java51.forum.dto.exception.PostNotFoundException;
+import telran.java51.forum.model.Post;
 
 @Service
 @RequiredArgsConstructor
@@ -22,14 +24,15 @@ public class ForumServiceImpl implements ForumService {
 
 	@Override
 	public PostDto addPost(String user, PostCreateDto postCreateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		Post post = modelMapper.map(postCreateDto, Post.class);
+		forumRepository.save(post);
+		return modelMapper.map(post, PostDto.class);
 	}
 
 	@Override
 	public PostDto findPostById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Post post = forumRepository.findById(id).orElseThrow(PostNotFoundException::new);
+		return modelMapper.map(post, PostDto.class);
 	}
 
 	@Override
