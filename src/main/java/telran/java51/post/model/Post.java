@@ -14,7 +14,7 @@ import lombok.Setter;
 
 @Getter
 @EqualsAndHashCode(of = "id")
-@Document(collection = "posts")
+@Document(collection = "forum")
 public class Post {
 	String id;
 	@Setter
