@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import telran.java51.accounting.dto.NewUserDto;
 import telran.java51.accounting.dto.RegisterDto;
-import telran.java51.accounting.dto.RoleDto;
 import telran.java51.accounting.dto.UserDto;
 import telran.java51.accounting.dto.UserRoleDto;
 import telran.java51.accounting.service.UserService;
@@ -41,12 +40,12 @@ public class UserController {
 	}
 
 	@PutMapping("/user/{user}/role/{role}")
-	public UserRoleDto addRole(@PathVariable("user") String login,@PathVariable RoleDto role) {
+	public UserRoleDto addRole(@PathVariable("user") String login,@PathVariable String role) {
 		return userService.addRole(login, role);
 	}
 
 	@DeleteMapping("/user/{user}/role/{role}")
-	public UserRoleDto removeRole(@PathVariable("user") String login,@PathVariable RoleDto role) {
+	public UserRoleDto removeRole(@PathVariable("user") String login,@PathVariable String role) {
 		return userService.removeRole(login, role);
 	}
 

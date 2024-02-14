@@ -8,5 +8,5 @@ import lombok.Getter;
 public class UserRoleDto {
 	
 	 String login; 
-	 List<RoleDto> roles;
+	 List<String> roles;
 }

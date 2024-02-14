@@ -10,6 +10,6 @@ public class UserDto {
     String login; 
     String firstName; 
     String lastName; 
-    List<RoleDto> roles;
+    List<String> roles;
     		
 }

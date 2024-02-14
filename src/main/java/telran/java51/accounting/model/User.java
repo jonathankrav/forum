@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import telran.java51.accounting.dto.RoleDto;
+import lombok.Singular;
 
 @Getter
 @EqualsAndHashCode(of = "login")
@@ -22,26 +22,27 @@ public class User {
 	String firstName; 
     @Setter
     String lastName; 
-    List<RoleDto> roles;
+    @Singular
+    List<String> roles;
     
     public User() {
     	roles = new ArrayList<>();
-    	roles.add(RoleDto.USER);
+    	roles.add("USER");
     }
 
-	public User(String login, String firstName, String lastName, List<RoleDto> roles) {
+	public User(String login, String firstName, String lastName, List<String> roles) {
 		this.login = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		roles.add(RoleDto.USER);
+		roles.add("USER");
 		this.roles = roles;
 	}
     
-    public boolean addRole(RoleDto role) {
+    public boolean addRole(String role) {
     	return roles.add(role);
     }
     
-    public boolean removeRole(RoleDto role) {
+    public boolean removeRole(String role) {
     	return roles.remove(role);
     }
 

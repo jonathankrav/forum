@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import telran.java51.accounting.dao.UserRepository;
 import telran.java51.accounting.dto.NewUserDto;
 import telran.java51.accounting.dto.RegisterDto;
-import telran.java51.accounting.dto.RoleDto;
 import telran.java51.accounting.dto.UserDto;
 import telran.java51.accounting.dto.UserRoleDto;
 import telran.java51.accounting.dto.exceptions.UserNotFoundException;
@@ -49,16 +48,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserRoleDto addRole(String login, RoleDto role) {
+	public UserRoleDto addRole(String login, String role) {
 		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
-		user.addRole(role);
+		user.addRole(role.toUpperCase());
 		return modelMapper.map(user, UserRoleDto.class);
 	}
 
 	@Override
-	public UserRoleDto removeRole(String login, RoleDto role) {
+	public UserRoleDto removeRole(String login, String role) {
 		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
-		user.removeRole(role);
+		user.removeRole(role.toUpperCase());
 		return modelMapper.map(user, UserRoleDto.class);
 	}
 
