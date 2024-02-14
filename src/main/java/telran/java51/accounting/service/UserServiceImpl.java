@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
 	public UserRoleDto addRole(String login, String role) {
 		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		user.addRole(role.toUpperCase());
+		user =  userRepository.save(user);
 		return modelMapper.map(user, UserRoleDto.class);
 	}
 
@@ -58,6 +59,7 @@ public class UserServiceImpl implements UserService {
 	public UserRoleDto removeRole(String login, String role) {
 		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		user.removeRole(role.toUpperCase());
+		user =  userRepository.save(user);
 		return modelMapper.map(user, UserRoleDto.class);
 	}
 
