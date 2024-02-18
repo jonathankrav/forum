@@ -1,7 +1,7 @@
 package telran.java51.accounting.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Singular;
 
 @Getter
 @EqualsAndHashCode(of = "login")
@@ -22,20 +21,21 @@ public class User {
 	String firstName; 
     @Setter
     String lastName; 
-    @Singular
-    List<String> roles;
+    @Setter
+    String password;
+    Set<String> roles;
     
     public User() {
-    	roles = new ArrayList<>();
+    	roles = new HashSet<>();
     	roles.add("USER");
     }
 
-	public User(String login, String firstName, String lastName, List<String> roles) {
+	public User(String login, String password, String firstName, String lastName) {
+		this();
 		this.login = login;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		roles.add("USER");
-		this.roles = roles;
+		this.password = password;
 	}
     
     public boolean addRole(String role) {

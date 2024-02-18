@@ -19,5 +19,9 @@ public interface UserService {
 	
 	UserDto getUser (String login);
 	
+	void changePassword(String login, String newPassword);
+	
+//	UserRoleDto changeRolesList(String login, String role, boolean isAddRole);
+	
 
 }
