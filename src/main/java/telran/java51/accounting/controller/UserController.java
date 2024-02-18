@@ -28,6 +28,8 @@ public class UserController {
 	public UserDto userRegister(@RequestBody RegisterDto registerDto) {
 		return userService.userRegister(registerDto);
 	}
+	
+
 
 	@DeleteMapping("/user/{user}")
 	public UserDto removeUser(@PathVariable("user") String login) {
