@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 		}
 		User user = modelMapper.map(registerDto, User.class);
 		String password = BCrypt.hashpw(registerDto.getPassword(), BCrypt.gensalt());
-		user.setPassword(password );
+		user.setPassword(password);
 		user = userRepository.save(user);
 		return modelMapper.map(user, UserDto.class);
 	}
@@ -92,8 +92,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void changePassword(String login, String newPassword) {
+//		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+//		user.setPassword(newPassword);
+//		userRepository.save(user);
+		
 		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
-		user.setPassword(newPassword);
+		String newPasswordNew = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+		user.setPassword(newPasswordNew);
 		userRepository.save(user);
 	}
 
