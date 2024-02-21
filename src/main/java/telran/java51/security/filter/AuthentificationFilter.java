@@ -53,8 +53,13 @@ public class AuthentificationFilter implements Filter {
 	}
 
 	private boolean checkEndPoint(String method, String path) {
-		return !(HttpMethod.POST.matches(method) && path.matches("/account/register"))
-				|| !(HttpMethod.POST.matches(method) && path.matches("/posts/tags"));
+
+		return !((HttpMethod.POST.matches(method) && (path.matches("/account/register") || path.matches("/forum/posts/tags")
+				|| path.matches("/forum/posts/period"))) 
+				|| (HttpMethod.GET.matches(method) && path.matches("/forum/posts/author/*.*")))
+				
+				
+				;
 	}
 
 	private String[] getCredentials(String header) {
