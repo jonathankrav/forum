@@ -16,19 +16,19 @@ import lombok.Setter;
 
 public class User {
 	@Id
-	String login; 
-    @Setter
-	String firstName; 
-    @Setter
-    String lastName; 
-    @Setter
-    String password;
-    Set<String> roles;
-    
-    public User() {
-    	roles = new HashSet<>();
-    	roles.add("USER");
-    }
+	String login;
+	@Setter
+	String firstName;
+	@Setter
+	String lastName;
+	@Setter
+	String password;
+	Set<Role> roles;
+
+	public User() {
+		roles = new HashSet<>();
+		roles.add(Role.USER);
+	}
 
 	public User(String login, String password, String firstName, String lastName) {
 		this();
@@ -37,13 +37,25 @@ public class User {
 		this.lastName = lastName;
 		this.password = password;
 	}
-    
-    public boolean addRole(String role) {
-    	return roles.add(role);
-    }
-    
-    public boolean removeRole(String role) {
-    	return roles.remove(role);
-    }
+
+	public boolean addRole(String role) {
+		Role[] values = Role.values();
+		for (Role role2 : values) {
+			if (role.matches(role2.toString())) {
+				return roles.add(role2);
+			}
+		}
+		return false;
+	}
+
+	public boolean removeRole(String role) {
+		Role[] values = Role.values();
+		for (Role role2 : values) {
+			if (role.matches(role2.toString())) {
+				return roles.remove(role2);
+			}
+		}
+		return false;
+	}
 
 }
