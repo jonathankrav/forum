@@ -39,23 +39,15 @@ public class User {
 	}
 
 	public boolean addRole(String role) {
-		Role[] values = Role.values();
-		for (Role role2 : values) {
-			if (role.matches(role2.toString())) {
-				return roles.add(role2);
-			}
-		}
-		return false;
+		return roles.add(Role.valueOf(role.toUpperCase()));
 	}
 
-	public boolean removeRole(String role) {
-		Role[] values = Role.values();
-		for (Role role2 : values) {
-			if (role.matches(role2.toString())) {
-				return roles.remove(role2);
-			}
-		}
-		return false;
+	public boolean removeRole(String role) {			
+		return roles.remove(Role.valueOf(role.toUpperCase()));
+	}
+	
+	public static Role strToRole (String role) {
+		return Role.valueOf(role);
 	}
 
 }
