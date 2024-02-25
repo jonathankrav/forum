@@ -6,20 +6,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import telran.java51.accounting.dao.UserRepository;
+import telran.java51.accounting.dao.UserAccountRepository;
 import telran.java51.accounting.dto.NewUserDto;
 import telran.java51.accounting.dto.RegisterDto;
 import telran.java51.accounting.dto.UserDto;
 import telran.java51.accounting.dto.UserRoleDto;
 import telran.java51.accounting.dto.exceptions.UserAlreadyExistsException;
 import telran.java51.accounting.dto.exceptions.UserNotFoundException;
-import telran.java51.accounting.model.User;
+import telran.java51.accounting.model.UserAccount;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, CommandLineRunner {
 
-	final UserRepository userRepository;
+	final UserAccountRepository userRepository;
 	final ModelMapper modelMapper;
 
 	@Override
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 		if (userRepository.existsById(registerDto.getLogin())) {
 			throw new UserAlreadyExistsException();
 		}
-		User user = modelMapper.map(registerDto, User.class);
+		UserAccount user = modelMapper.map(registerDto, UserAccount.class);
 		String password = BCrypt.hashpw(registerDto.getPassword(), BCrypt.gensalt());
 		user.setPassword(password);
 		user = userRepository.save(user);
@@ -36,14 +36,14 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 
 	@Override
 	public UserDto removeUser(String login) {
-		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+		UserAccount user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		userRepository.delete(user);
 		return modelMapper.map(user, UserDto.class);
 	}
 
 	@Override
 	public UserDto updateUser(String login, NewUserDto newUserDto) {
-		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+		UserAccount user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		if (newUserDto.getFirstName() != null) {
 			user.setFirstName(newUserDto.getFirstName());
 		}
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 
 	@Override
 	public UserRoleDto addRole(String login, String role) {
-		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+		UserAccount user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		user.addRole(role.toUpperCase());
 		user = userRepository.save(user);
 		return modelMapper.map(user, UserRoleDto.class);
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 
 	@Override
 	public UserRoleDto removeRole(String login, String role) {
-		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+		UserAccount user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		user.removeRole(role.toUpperCase());
 		user = userRepository.save(user);
 		return modelMapper.map(user, UserRoleDto.class);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 
 	@Override
 	public UserDto getUser(String login) {
-		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+		UserAccount user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		return modelMapper.map(user, UserDto.class);
 	}
 
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 //		user.setPassword(newPassword);
 //		userRepository.save(user);
 
-		User user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
+		UserAccount user = userRepository.findById(login).orElseThrow(UserNotFoundException::new);
 		String newPasswordNew = BCrypt.hashpw(newPassword, BCrypt.gensalt());
 		user.setPassword(newPasswordNew);
 		userRepository.save(user);
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService, CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if (!userRepository.existsById("admin")) {
 			String password = BCrypt.hashpw("admin", BCrypt.gensalt());
-			User user = new User("admin", password, "", "");
+			UserAccount user = new UserAccount("admin", password, "", "");
 			user.addRole("MODERATOR");
 			user.addRole("ADMINISTRATOR");
 			userRepository.save(user);

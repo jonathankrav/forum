@@ -15,7 +15,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import telran.java51.accounting.dao.UserRepository;
+import telran.java51.accounting.dao.UserAccountRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ import telran.java51.accounting.dao.UserRepository;
 public class AddPostAuthentificationFilter implements Filter {
 
 
-	final UserRepository userRepository;
+	final UserAccountRepository userRepository;
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)

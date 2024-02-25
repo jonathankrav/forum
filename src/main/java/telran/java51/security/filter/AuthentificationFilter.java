@@ -3,6 +3,7 @@ package telran.java51.security.filter;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
+import java.util.Set;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.core.annotation.Order;
@@ -17,15 +18,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import telran.java51.accounting.dao.UserRepository;
-import telran.java51.accounting.model.User;
+import telran.java51.accounting.dao.UserAccountRepository;
+import telran.java51.accounting.model.UserAccount;
+import telran.java51.security.model.User;
 
 @Component
 @RequiredArgsConstructor
 @Order(10)
 public class AuthentificationFilter implements Filter {
 	
-	final UserRepository userRepository;
+	final UserAccountRepository userRepository;
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -34,7 +36,7 @@ public class AuthentificationFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;
 		
 		if (checkEndPoint(request.getMethod(), request.getServletPath())) {
-			User user;
+			UserAccount user;
 			try {
 				String[] credentials = getCredentials(request.getHeader("Authorization"));
 				user = userRepository.findById(credentials[0]).orElseThrow(RuntimeException::new);
@@ -45,7 +47,7 @@ public class AuthentificationFilter implements Filter {
 				response.sendError(401);
 				return;
 			} 
-			request = new WrappedRequest(request, user.getLogin());
+			request = new WrappedRequest(request, user.getLogin(), user.getRoles());
 		}
 		
 		chain.doFilter(request, response);
@@ -69,14 +71,16 @@ public class AuthentificationFilter implements Filter {
 	
 	private class WrappedRequest extends HttpServletRequestWrapper {
 		private String login;
-		public WrappedRequest(HttpServletRequest request, String login) {
+		private Set<String> roles;
+		public WrappedRequest(HttpServletRequest request, String login, Set<String>roles ) {
 			super(request);
 			this.login = login;
+			this.roles = roles;
 		}
 		
 		@Override
 		public Principal getUserPrincipal() {
-			return () -> login;
+			return new User(login, roles);
 			
 		}
 		

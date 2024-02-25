@@ -15,8 +15,9 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import telran.java51.accounting.dao.UserRepository;
+import telran.java51.accounting.dao.UserAccountRepository;
 import telran.java51.post.dao.PostRepository;
+import telran.java51.post.model.Post;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ import telran.java51.post.dao.PostRepository;
 public class UpdatePostByOwnerFilter implements Filter {
 
 	final PostRepository postRepository;
-	final UserRepository userRepository;
+	final UserAccountRepository userRepository;
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -34,9 +35,13 @@ public class UpdatePostByOwnerFilter implements Filter {
 		if (checkEndPoint(request.getMethod(), request.getServletPath())) {
 			Principal principal = request.getUserPrincipal();
 			String[] arr = request.getServletPath().split("/");
-			String postId = arr[arr.length-1];		
-			String author = postRepository.findById(postId).get().getAuthor();
-			if(!principal.getName().equalsIgnoreCase(author)) {
+			String postId = arr[arr.length-1];	
+			Post post = postRepository.findById(postId).orElse(null);
+			if (post == null){
+			response.sendError(404);
+			return;
+	       	}
+			if(!principal.getName().equalsIgnoreCase(post.getAuthor())) {
 				response.sendError(403, "Permission denied");
 				return;
 			}
