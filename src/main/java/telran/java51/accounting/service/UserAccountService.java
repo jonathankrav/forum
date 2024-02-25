@@ -5,7 +5,7 @@ import telran.java51.accounting.dto.NewUserDto;
 import telran.java51.accounting.dto.RegisterDto;
 import telran.java51.accounting.dto.UserDto;
 
-public interface UserService {
+public interface UserAccountService {
 	
 	UserDto userRegister (RegisterDto registerDto);
 	

@@ -19,14 +19,14 @@ import telran.java51.accounting.dto.NewUserDto;
 import telran.java51.accounting.dto.RegisterDto;
 import telran.java51.accounting.dto.UserDto;
 import telran.java51.accounting.dto.UserRoleDto;
-import telran.java51.accounting.service.UserService;
+import telran.java51.accounting.service.UserAccountService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/account")
 public class UserController {
 
-	final UserService userService;
+	final UserAccountService userService;
 
 	@PostMapping("/register")
 	public UserDto userRegister(@RequestBody RegisterDto registerDto) {

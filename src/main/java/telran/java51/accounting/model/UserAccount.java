@@ -14,7 +14,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "login")
 @Document(collection = "users")
 
-public class User {
+public class UserAccount {
 	@Id
 	String login;
 	@Setter
@@ -25,12 +25,12 @@ public class User {
 	String password;
 	Set<Role> roles;
 
-	public User() {
+	public UserAccount() {
 		roles = new HashSet<>();
 		roles.add(Role.USER);
 	}
 
-	public User(String login, String password, String firstName, String lastName) {
+	public UserAccount(String login, String password, String firstName, String lastName) {
 		this();
 		this.login = login;
 		this.firstName = firstName;
